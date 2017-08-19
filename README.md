@@ -3,7 +3,7 @@ Simple utility that allows a full stack JavaScript application to easily declare
 
 ## Why is this useful (what I use it for)
 For the full stack web _(NodeJS)_ projects that I am building, its convenient to have all of the routes the application uses in located in one module. As an example, I will first define the routes using the `route` function provided by `universal-route-defs`.
-```
+```javascript
 // shared_urls.js
 import { route } from 'universal-route-defs'
 
@@ -22,7 +22,7 @@ export default {
 ```
 
 Then, I can use them in my Express routes.
-```
+```javascript
 // index.js
 import urls from './shared_urls'
 
@@ -41,7 +41,7 @@ router.get(urls.api.userData.get({ username: 'angushtlam', }), (request, respons
 ```
 
 An additional benefit is that the frontend can also consume the same data store. No more copypasting and inconsistent routes!
-```
+```javascript
 // frontend/index.js
 let username = 'angushtlam' // Pretend this variable is dynamically determined.
 
