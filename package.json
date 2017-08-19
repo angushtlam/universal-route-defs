@@ -1,0 +1,29 @@
+{
+  "name": "universal-route-defs",
+  "version": "1.0.1",
+  "description": "Simple utility that allows a full stack JavaScript application to easily declare nested routes and retrieve the corresponding URL paths in a shared module.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angushtlam/universal-route-defs.git"
+  },
+  "keywords": [
+    "monolith",
+    "shared",
+    "urls",
+    "routes",
+    "route",
+    "nested",
+    "utility",
+    "util"
+  ],
+  "author": "Angus Lam <angushtlam@gmail.com> (http://angus.works)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/angushtlam/universal-route-defs/issues"
+  },
+  "homepage": "https://github.com/angushtlam/universal-route-defs#readme"
+}
