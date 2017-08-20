@@ -2,11 +2,10 @@
   "name": "universal-route-defs",
   "version": "1.0.4",
   "description": "Simple utility that allows a full stack JavaScript application to easily declare nested routes and retrieve the corresponding URL paths in a shared module.",
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
-    "build": "babel src -d dist",
-    "clean": "rm -rf dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "babel src/index.js --out-file index.js",
+    "clean": "rm index.js"
   },
   "repository": {
     "type": "git",
