@@ -8,8 +8,8 @@
 function route(url = () => '/', children = {}) {
   // Force any children to call the parent function.
   const routify = {}
-  Object.keys(children).forEach((key) => {
-    routify[key] = route((props) => {
+  Object.keys(children).forEach(key => {
+    routify[key] = route(props => {
       // Call the parent route and the child's route definition.
       return url(props) + children[key].get(props)
     }, children[key] || {})
