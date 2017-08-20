@@ -10,3 +10,8 @@ cache:
 script:
   - npm run clean
   - npm run build
+
+deploy:
+  provider: npm
+  email: "angushtlam@gmail.com"
+  api_key: $NPM_AUTH_TOKEN
