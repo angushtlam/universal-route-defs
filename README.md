@@ -1,13 +1,37 @@
 # universal-route-defs
 Simple utility that allows a full stack JavaScript application to easily declare nested routes and retrieve the corresponding URL paths in a shared module.
 
+## New version: 2.0.0
+v2 is a breaking change from v1. This new version fixes a critical issue from the previous iteration of this library, where nested routes 2+ levels deep had duplication issues in parts of the url. It didn't break anything if you used the library as intended; you just had ugly URLs. Sorry!
+
+v2 fixes the issue, but also includes some nice things you'll appreciate:
+ - The library now has *tests*!
+ - More comments and documentation
+
+### Migration Guide from v1 -> v2
+First, you will need the new function `routes` from the library.
+```javascript
+import { route, routes, } from 'universal-route-defs'
+```
+
+Then, change your route definitions as such:
+```javascript
+// v1: Old - Don't do this anymore!
+const urls = { ... }
+
+// v2: New - Do this!
+const urls = routes({ ... })
+```
+
+You should be good to go from now on!
+
 ## Why is this useful (what I use it for)
 For the full stack web _(NodeJS)_ projects that I am building, its convenient to have all of the routes the application uses in located in one module. As an example, I will first define the routes using the `route` function provided by `universal-route-defs`.
 ```javascript
 // shared_urls.js
-import { route } from 'universal-route-defs'
+import { route, routes } from 'universal-route-defs'
 
-export default {
+export default routes({
   root: route(() => '/', {}),
   api: route(() => '/api', {
     userData: route(
@@ -18,7 +42,7 @@ export default {
   user: route(props = { username: ':username', }) => {
     return `/user/${props.username}`
   }, {}),
-}
+})
 ```
 
 Then, I can use them in my Express routes.
@@ -51,10 +75,24 @@ fetch(urls.api.userData.get({ username: username, }))
 ```
 
 ## Documentation
-### `route(url, children)`
+### `route(url, children = {})`
 Arguments:
 _url_ - The route you want this function to resolve to.
-_children_ - Any subroutes that you want to nest under. Takes an object of named routes.
+_children_ - Any subroutes that you want to nest under. Takes an object of named routes. By default this is empty.
+
+The `route` function is an important building block for this library to work. You will need this function puts your route definitions in the correct format.
 
 #### `.get(props)`
-All route functions have a `get` property that resolves the route at the given location (that means you can't name one of your routes `get`. Pro Tip: you should name your routes with nouns). You can optionally provide an object of defined values and the route will replace any prop strings with the provided values (see usage in example above).
+All route functions have a `get` property that resolves the route at the given location (that means you can't name one of your routes `get`. Pro Tip: you should name your routes with only nouns). You can optionally provide an object of defined values and the route will replace any prop strings with the provided values (see usage in example above).
+
+### `routes(urls)`
+Arguments:
+_urls_ - The object of urls you've defined with `route`.
+
+This function is where all the magic happens. This goes through the object of `route`s you've defined and appropriately prefixes your child routes.
+
+### `logRoutes(urls)`
+Arguments:
+_urls_ - The object of urls you've defined with `route`.
+
+This function prints out all of the routes you've defined in an object with this library. Useful utility function.

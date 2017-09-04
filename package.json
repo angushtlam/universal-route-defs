@@ -1,11 +1,12 @@
 {
   "name": "universal-route-defs",
-  "version": "1.0.5",
+  "version": "2.0.0",
   "description": "Simple utility that allows a full stack JavaScript application to easily declare nested routes and retrieve the corresponding URL paths in a shared module.",
   "main": "index.js",
   "scripts": {
     "build": "babel src/index.js --out-file index.js",
-    "clean": "rm index.js"
+    "clean": "rm index.js",
+    "test": "mocha --compilers js:babel-core/register './src/**/test.js'"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
   "homepage": "https://github.com/angushtlam/universal-route-defs#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1"
+    "babel-preset-es2015": "^6.24.1",
+    "mocha": "^3.5.0"
   }
 }
