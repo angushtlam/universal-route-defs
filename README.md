@@ -1,30 +1,6 @@
 # universal-route-defs
 Simple utility that allows a full stack JavaScript application to easily declare nested routes and retrieve the corresponding URL paths in a shared module.
 
-## New version: 2.0.0
-v2 is a breaking change from v1. This new version fixes a critical issue from the previous iteration of this library, where nested routes 2+ levels deep had duplication issues in parts of the url. It didn't break anything if you used the library as intended; you just had ugly URLs. Sorry!
-
-v2 fixes the issue, but also includes some nice things you'll appreciate:
- - The library now has *tests*!
- - More comments and documentation
-
-### Migration Guide from v1 -> v2
-First, you will need the new function `routes` from the library.
-```javascript
-import { route, routes, } from 'universal-route-defs'
-```
-
-Then, change your route definitions as such:
-```javascript
-// v1: Old - Don't do this anymore!
-const urls = { ... }
-
-// v2: New - Do this!
-const urls = routes({ ... })
-```
-
-You should be good to go from now on!
-
 ## Why is this useful (what I use it for)
 For the full stack web _(NodeJS)_ projects that I am building, its convenient to have all of the routes the application uses in located in one module. As an example, I will first define the routes using the `route` function provided by `universal-route-defs`.
 ```javascript
@@ -34,14 +10,9 @@ import { route, routes } from 'universal-route-defs'
 export default routes({
   root: route(() => '/', {}),
   api: route(() => '/api', {
-    userData: route(
-      (props = { username: ':username', }) => {
-        return `/user/${props.username}`
-      }, {})
+    userData: route((props = { username: ':username', }) => `/user/${props.username}`)
   }),
-  user: route(props = { username: ':username', }) => {
-    return `/user/${props.username}`
-  }, {}),
+  user: route((props = { username: ':username', }) => `/user/${props.username}`),
 })
 ```
 
@@ -70,8 +41,8 @@ An additional benefit is that the frontend can also consume the same data store.
 let username = 'angushtlam' // Pretend this variable is dynamically determined.
 
 fetch(urls.api.userData.get({ username: username, }))
-.then((response) => { return response.json() })
-.then((data) => { ... })
+.then(response => { return response.json() })
+.then(data => { ... })
 ```
 
 ## Documentation
