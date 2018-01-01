@@ -28,7 +28,9 @@ function routes(urls = {}, parentGet = () => '') {
     // and the new overridden version won't try to call itself.
     const definedGet = urls.get
 
-    urls.get = props => parentGet(props) + definedGet(props)
+    urls.get = props => {
+      return parentGet(props) + definedGet(props)
+    }
   }
 
   // Continue prefixing all of the subroutes of the set of urls by calling this

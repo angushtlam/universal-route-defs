@@ -20,6 +20,10 @@ describe('route retrieval', () => {
     it('with props but with no arguments provided', () => {
       assert.deepEqual(urls.referral.get(), '/referral/:referralId')
     })
+
+    it('with no props but arguments provided', () => {
+      assert.deepEqual(urls.root.get({ dummy: 'dummy' }), '/')
+    })
   
     it('with props and arguments provided', () => {
       assert.deepEqual(urls.referral.get({ referralId: '1' }), '/referral/1')
@@ -28,16 +32,6 @@ describe('route retrieval', () => {
         urls.referral.get({ referralId: 'l33t' }),
         '/referral/l33t'
       )
-    })
-
-    /*
-     * In the case where there are props for a route that take no props, it
-     * should fall back safely with no special formatting on the current route.
-     * This behavior is consistant for when there are valid props for a nested
-     * route, because the props can replace any ones defined in the parent route
-     */
-    it('with props but no arguments provided', () => {
-      assert.deepEqual(urls.root.get({ dummy: 'dummy' }), '/')
     })
   })
 
@@ -57,7 +51,7 @@ describe('route retrieval', () => {
         ), {
           preview: route(() => '/preview'),
           variant: route((props = { variantId: ':variantId' }) => (
-            `/${props.variantId}`
+            `/variant/${props.variantId}`
           )),
         }),
       }),
@@ -91,7 +85,15 @@ describe('route retrieval', () => {
     it('with props defined in a parent route and arguments provided', () => {
       assert.deepEqual(
         urls.shop.item.preview.get({ itemId: '21' }),
-        '/shop/item/21/preview')
+        '/shop/item/21/preview'
+      )
+    })
+
+    it('with props defined and arguments provided in parent and child route', () => {
+      assert.deepEqual(
+        urls.shop.item.variant.get({ itemId: '21', variantId: 'a' }),
+        '/shop/item/21/variant/a'
+      )
     })
   })
 })
