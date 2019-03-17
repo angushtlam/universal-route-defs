@@ -1,8 +1,13 @@
 # universal-route-defs
 Simple utility that allows a full stack JavaScript application to easily declare nested routes and retrieve the corresponding URL paths in a shared module.
 
-## Why is this useful (what I use it for)
-For the full stack web _(NodeJS)_ projects that I am building, its convenient to have all of the routes the application uses in located in one module. As an example, I will first define the routes using the `route` function provided by `universal-route-defs`.
+## Why is this useful
+For full stack web projects, it's convenient to have all of the routes the application uses in located in one place. `universal-route-defs` allow you to define nested routes for better organization. It also has support for middlewares that uses route parameters (like Express, Koa, Hapi).
+
+If your project is set up to be a monorepo, there is an added benefit of sharing the route definitions in the frontend and middleware server. No more copypasting and inconsistent routes!
+
+## Usage
+First, define the routes using the `route` function provided by `universal-route-defs`.
 ```javascript
 // shared_urls.js
 import { route, routes } from 'universal-route-defs'
@@ -16,7 +21,7 @@ export default routes({
 })
 ```
 
-Then, I can use them in my Express routes.
+Then, replace URLs in middleware (example for Express)
 ```javascript
 // index.js
 import urls from './shared_urls'
@@ -35,7 +40,7 @@ router.get(urls.api.userData.get(), (request, response) => { ... })
 router.get(urls.api.userData.get({ username: 'angushtlam', }), (request, response) => { ... })
 ```
 
-An additional benefit is that the frontend can also consume the same data store. No more copypasting and inconsistent routes!
+Finally, the frontend can also consume the same data.
 ```javascript
 // frontend/index.js
 let username = 'angushtlam' // Pretend this variable is dynamically determined.
