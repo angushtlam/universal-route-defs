@@ -6,6 +6,8 @@ For full stack web projects, it's convenient to have all of the routes the appli
 
 If your project is set up to be a monorepo, there is an added benefit of sharing the route definitions in the frontend and middleware server. No more copypasting and inconsistent routes!
 
+`universal-route-defs` is also small with no dependencies! It is only 2.4kB in size.
+
 ## Usage
 First, define the routes using the `route` function provided by `universal-route-defs`.
 ```javascript
