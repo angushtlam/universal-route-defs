@@ -1,12 +1,16 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.route = route;
+exports.routes = routes;
+exports.logRoutes = logRoutes;
+
 /**
  * This is a route function definer. This will allow a neat way to
  * centrally define URLs that you can use isomorphically.
- * 
+ *
  * @param {string, function} url URL of route
  * @param {object} children any children routes.
  */
@@ -15,10 +19,10 @@ function route() {
     return '/';
   };
   var children = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-  return Object.assign({}, children, { get: url });
+  return Object.assign({}, children, {
+    get: url
+  });
 }
-
 /**
  * This function that takes an object of route definitions and nests all of the
  * children definitions correctly by prefixing them with the appropriate parent
@@ -28,6 +32,8 @@ function route() {
  * @param {*} parentGet Internally used parameter to correctly prefix children
  *                      routes with the parent's url definition.
  */
+
+
 function routes() {
   var urls = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var parentGet = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {
@@ -46,33 +52,26 @@ function routes() {
     urls.get = function (props) {
       return parentGet(props) + definedGet(props);
     };
-  }
-
-  // Continue prefixing all of the subroutes of the set of urls by calling this
+  } // Continue prefixing all of the subroutes of the set of urls by calling this
   // function recursively.
+
+
   var subroutes = Object.keys(urls).filter(function (key) {
     return key !== 'get';
   });
   subroutes.forEach(function (key) {
     routes(urls[key], urls.get);
   });
-
   return urls;
 }
 
 function logRoutes() {
   var urls = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
   var subroutes = Object.keys(urls).filter(function (key) {
     return ['get'].indexOf(key) < 0;
   });
-
   subroutes.forEach(function (key) {
     console.log(urls[key].get());
     debugRouteMap(urls[key]);
   });
 }
-
-exports.route = route;
-exports.routes = routes;
-exports.logRoutes = logRoutes;

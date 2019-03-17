@@ -1,12 +1,12 @@
 /**
  * This is a route function definer. This will allow a neat way to
  * centrally define URLs that you can use isomorphically.
- * 
+ *
  * @param {string, function} url URL of route
  * @param {object} children any children routes.
  */
 function route(url = () => '/', children = {}) {
-  return Object.assign({}, children, { get: url, })
+  return Object.assign({}, children, {get: url})
 }
 
 /**
@@ -44,9 +44,7 @@ function routes(urls = {}, parentGet = () => '') {
 }
 
 function logRoutes(urls = {}) {
-  const subroutes = Object.keys(urls).filter(
-    key => [ 'get', ].indexOf(key) < 0
-  )
+  const subroutes = Object.keys(urls).filter(key => ['get'].indexOf(key) < 0)
 
   subroutes.forEach(key => {
     console.log(urls[key].get())
@@ -54,4 +52,4 @@ function logRoutes(urls = {}) {
   })
 }
 
-export { route, routes, logRoutes, }
+export {route, routes, logRoutes}
